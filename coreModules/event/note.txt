@@ -1,0 +1,27 @@
+What Are Events in Node.js?
+In Node.js, an event is an action or occurrence that the program can detect and handle. The event-driven architecture allows asynchronous programming, and your application becomes able to perform non-blocking operations. This means that while waiting for an operation to complete (like reading a file or making a network request), the application can continue processing other tasks.
+
+Key Features of EventEmitter:
+Event Registration: You can register listeners for specific events using the on() method.
+Event Emission: Use the emit() method to trigger an event and call all registered listeners for that event.
+Asynchronous Execution: Listeners can execute asynchronously, allowing other operations to continue while waiting for events.
+
+Working with Events in Node.js
+
+Step 1: Importing the Events Module
+To start using events in your application, you need to import the events module and create an instance of the EventEmitter class.
+
+const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+Step 2: Registering Event Listeners
+You can register listeners for specific events using the on() method. The first argument is the event name, and the second argument is the callback function to be executed when the event is emitted.
+
+myEmitter.on('event', () => {
+    console.log('An event occurred!');
+});
+
+Step 3: Emitting Events
+To trigger an event, use the emit() method with the event name as the first argument.
+
+myEmitter.emit('event');

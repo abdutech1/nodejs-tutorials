@@ -1,0 +1,142 @@
+NodeJS HTTP Module
+
+In NodeJS, the HTTP module is a core built-in module that enables developers to create and manage HTTP servers. It plays a crucial role in handling server-side HTTP requests and responses, allowing for seamless communication between clients and servers.
+
+Architecture
+The HTTP module extends two built-in classes:
+
+Net module
+Provides network API for creating stream-based TCP servers or clients.
+Events module
+Provides an event-driven architecture using EventEmitter class.
+This means that when working with an HTTP module, you can listen and act upon the events, while the data is processed using streams.
+
+
+Some of the key features of the NodeJS HTTP Modules are mentioned below:
+
+Server Creation: It allows the creation of HTTP servers.
+Handling Requests: It listens for incoming HTTP requests and performs actions based on the request type.
+Sending Responses: It sends responses back to the client, allowing for dynamic content delivery.
+Working with Different HTTP Methods: It supports GET, POST, PUT, DELETE, and other HTTP request methods.
+
+Creating Servers using HTTP
+You can create a server using http.createServer() that listens for requests.
+
+When you invoke http.createServer(), you're essentially initiating a process that sets up the foundation for your web application to listen for and respond to incoming network requests. Here's a breakdown of what happens under the hood:
+
+1, Initialization of a New Server Object: The createServer() method doesn't immediately start listening on a port. Instead, it instantiates a new object, specifically an instance of the http.Server class (or https.Server for secure connections). This object encapsulates all the necessary logic and resources for handling network connections.
+
+2, Setting Up the Request Listener (Optional but Common): You'll often pass a callback function as an argument to createServer(). This function acts as the request listener. Node.js will automatically attach this function to the 'request' event of the newly created server object. This is where your application's core logic for handling incoming HTTP requests resides.
+
+3, Event-Driven Architecture: Node.js operates on an event-driven architecture. The http.Server object is an EventEmitter. This means it can emit various events during its lifecycle, such as:
+
+'request': Emitted when the server receives a new HTTP request.
+'connection': Emitted when a new TCP connection is established.
+'close': Emitted when the server is closed.
+'error': Emitted when an error occurs.
+
+By providing a request listener function, you're essentially subscribing to the 'request' event.
+
+The function takes two arguments:
+
+request object (req)
+response object (res)
+
+Both arguments are stream objects.
+
+1, The req Object (IncomingMessage): Representing the Client's Request
+
+The req object is an instance of http.IncomingMessage. It encapsulates all the information about the incoming HTTP request from the client (e.g., a web browser, a mobile app, another server). Think of it as a container holding everything the client sent to your server.
+
+What it contains:
+
+req.method: A string specifying the HTTP request method used by the client. Common methods include:
+
+'GET': Used to request data from the server.
+'POST': Used to send data to the server to create or update a resource.
+'PUT': Used to send data to the server to update a resource.
+'DELETE': Used to request the deletion of a resource.
+
+req.url: A string representing the requested URL. This includes the path, query string. For example, if the client requests http://localhost:3000/users?id=123&name=Alice, req.url would be /users?id=123&name=Alice.
+
+
+Reading the Query String
+The http.createServer() function takes a request (req) object, which contains information about the incoming HTTP request. One of the key properties of the req object is url, which holds the part of the URL after the domain name.
+
+Splitting the Query String
+You can use the built-in url module to easily parse and split the query string into readable parts.
+
+var http = require('http');
+var url = require('url');
+
+http.createServer(function (req, res) {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    var q = url.parse(req.url, true).query; // Parse the query string
+    var txt = q.year + " " + q.month; // Get year and month from query string
+    res.end(txt); // Display the result
+}).listen(8080, () => {
+    console.log('Server running at http://localhost:8080/');
+});
+
+In this example
+
+The server listens for HTTP requests and parses the query string of the URL.
+The url.parse(req.url, true).query parses the URL and extracts the query parameters as an object.
+The q.year and q.month are then concatenated into a string txt.
+The server sends the txt string (2025 March) as the response, if you access the URL:
+
+http://localhost:8080/?year=2025&month=March
+
+Using the url Module to Parse Request URLs
+
+When a client sends a request to your server, the req.url property contains the path and query string of the request — but it's just a plain string.
+To work with it more easily, Node.js provides a built-in url module to parse and extract different parts of the URL.
+
+We can use url.parse() method to break down a URL string into its parts.
+
+parsedUrl.pathname	Returns the path part of the URL (e.g., /hello)
+parsedUrl.query	Returns the query string parameters as an object
+
+
+req.headers: An object containing the HTTP request headers sent by the client. Headers provide additional information about the request, such as the client's browser (User-Agent), accepted content types (Accept), authentication tokens (Authorization), etc. The header names are typically lowercased.
+
+Request Body (Data): For requests that send data (like POST or PUT), the body of the request is available as a stream. You'll typically need to listen for 'data' events to receive chunks of the body and 'end' event to know when the entire body has been received. Libraries like body-parser can simplify this process by parsing the body into a more usable format (e.g., JSON, URL-encoded).
+
+**How it works: When your Node.js server receives an incoming HTTP request, the http module automatically parses the raw data from the network connection and creates an IncomingMessage object (req) populated with the details of the request. This object is then passed as the first argument to your request handler function.
+
+
+
+
+
+
+
+2. The res Object (ServerResponse): For Sending the Server's Response
+
+The res object is an instance of http.ServerResponse. It represents the server's response that you will send back to the client. Think of it as the channel through which your server communicates its answer to the client's request.
+
+Key methods and properties:
+
+res.writeHead(statusCode[, headers]): This method sends the HTTP response headers to the client. It must be called before any actual response body is sent.
+
+statusCode: A three-digit HTTP status code (e.g., 200 for OK, 404 for Not Found, 500 for Internal Server Error).
+res.statusCode = 200; // Set status code
+
+headers (optional): An object containing response headers (e.g., Content-Type).
+res.setHeader('Content-Type', 'text/plain');
+res.setHeader('Content-Type', 'text/html');
+res.setHeader('Content-Type', 'application/json');
+res.setHeader('Content-Type',  'text/css');
+
+ res.writeHead(200, { 'Content-Type': 'text/plain' });
+
+res.write(chunk[, encoding][, callback]): Sends a chunk of the response body. This method can be called multiple times to send data in parts. The chunk can be a buffer or a string.
+
+res.end([data][, encoding][, callback]): Signals to the server that all of the response headers and body have been sent. The server will then finalize the response. You must call res.end() on each response. You can optionally pass the last chunk of the response body as an argument to res.end().
+
+res.statusCode: A property that can be set to change the status code of the response.
+
+How it works: When your request handler function is executed, you use the res object to construct and send the server's response back to the client. You first set the headers using res.writeHead() or res.setHeader(), then write the response body using res.write() (potentially multiple times), and finally signal the end of the response with res.end(). The http module then takes care of formatting this information into a valid HTTP response and sending it back over the network connection to the client.
+
+4, Binding to a Port and Host (Separate Step): Crucially, createServer() itself does not start the server listening for connections. You need to explicitly call the server.listen() method to bind the server to a specific port.
+
+The listen() method is the point at which the Node.js process interacts with the operating system to reserve the specified port and start listening for incoming connections on that port and address.

@@ -1,0 +1,92 @@
+REST APIs
+
+API is an acronym for Application Programming Interface. The word interface generally refers to a common meeting ground between two isolated and independent environments. A programming interface is an interface between two software applications. The term REST API or RESTFul API is used for a web Application that exposes its resources to other web/mobile applications through the Internet, by defining one or more endpoints which the client apps can visit to perform read/write operations on the host's resources.
+
+REST architecture has become the de facto standard for building APIs, preferred by the developers over other technologies such as RPC, (stands for Remote Procedure Call), and SOAP (stands for Simple Object Access Protocol).
+
+What is REST architecture?
+REST stands for REpresentational State Transfer. REST is a well known software architectural style. It defines how the architecture of a web application should behave. It is a resource based architecture where everything that the REST server hosts, (a file, an image, or a row in a table of a database), is a resource, having many representations. REST was first introduced by Roy Fielding in 2000.
+
+REST recommends certain architectural constraints.
+
+Uniform interface
+
+Statelessness
+
+Client-server
+
+Cacheability
+
+Layered system
+
+Code on demand
+
+A REST Server provides access to resources and REST client accesses and modifies the resources using HTTP protocol. Here each resource is identified by URIs/ global IDs. REST uses various representation to represent a resource like text, JSON, XML but JSON is the most popular one.
+
+JSON stands for JavaScript Object Notation
+JSON is a text format for storing and transporting data
+
+This example is a JSON string:
+
+const Jobj = '{"name":"John", "age":30, "car":null}'
+
+If you parse the JSON string with a JavaScript program, you can access the data as an object:
+console.log(JSON.parse(obj));
+
+JavaScript also has a built in function for converting an object into a JSON string:
+const obj = { name: 'John', age: 30, car: null }
+JSON.stringify(obj)
+
+A common use of JSON is to exchange data to/from a web server.
+When receiving data from a web server, the data is always a string.
+Parse the data with JSON.parse(), and the data becomes a JavaScript object.
+
+***Resources: Everything in a REST API is treated as a "resource." These resources can be anything – users, products, orders, etc. Each resource is identified by a unique URL (Uniform Resource Locator), often called an endpoint.
+
+***HTTP Methods: REST APIs use standard HTTP methods to perform actions on resources:
+GET: Retrieve data about a resource. (Think: "Get me the details of user with ID 123.")
+POST: Create a new resource. (Think: "Create a new user with this information.")
+PUT: Update an existing resource completely. (Think: "Replace all the information for user with ID 123 with this new data.")
+PATCH: Partially update an existing resource. (Think: "Update just the email address for user with ID 123.")
+DELETE: Remove a resource. (Think: "Delete user with ID 123.")
+
+***Representations: Resources can be represented in various formats, but the most common for web APIs are JSON (JavaScript Object Notation) and XML. JSON is generally preferred due to its simplicity and ease of use with JavaScript.
+
+***Building a Simple REST API with Vanilla Node.js
+
+
+
+else if (pathName.match(/\/api\/users\/([0-9]+)/) && req.method === 'PATCH') {
+  const id = pathName.split('/')[3]
+  let body = ''
+  req.on('data', chunk => {
+    body += chunk.toString()
+  })
+  req.on('end', () => {
+    const index = users.findIndex(user => user.id === parseInt(id))
+    if (index !== -1) {
+      const updates = JSON.parse(body)
+      users[index] = { ...users[index], ...updates }
+      res.statusCode = 200
+      res.end(JSON.stringify(users[index]))
+    } else {
+      res.statusCode = 404
+      res.end(`No user with id: ${id}`)
+    }
+  })
+
+// DELETE user
+} else if (pathName.match(/\/api\/users\/([0-9]+)/) && req.method === 'DELETE') {
+  const id = pathName.split('/')[3]
+  const index = users.findIndex(user => user.id === parseInt(id))
+  if (index !== -1) {
+    users.splice(index, 1)
+    res.statusCode = 200
+    res.end(`User with id ${id} deleted.`)
+  } else {
+    res.statusCode = 404
+    res.end(`No user with id: ${id}`)
+  }
+
+// Not Found
+}

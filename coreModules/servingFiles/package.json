@@ -1,0 +1,14 @@
+{
+  "name": "servingstaticfiles",
+  "version": "1.0.0",
+  "description": "Serving static files",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon ext.js"
+  },
+  "author": "abdutech1",
+  "license": "MIT",
+  "dependencies": {
+    "mime-types": "^3.0.1"
+  }
+}

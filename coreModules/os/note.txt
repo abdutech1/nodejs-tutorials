@@ -1,0 +1,30 @@
+Node.js OS
+
+The os module in Node.js provides operating system-related utility methods and properties. It helps retrieve system information such as CPU details, memory usage, and network interfaces, enabling you to write system-aware applications.
+
+It provides functions to interact with the operating system. It provides the hostname of the operating system and returns the amount of free system memory in bytes. 
+
+os.arch(): Returns the CPU architecture of the operating system (e.g., ‘x64’, ‘arm’).
+os.cpus(): Provides an array of objects describing each CPU/core installed.
+os.freemem(): Returns the amount of free system memory in bytes.
+os.homedir(): Returns the path to the current user’s home directory.
+os.hostname(): Returns the hostname of the operating system.
+os.networkInterfaces(): Returns a list of network interfaces and their details.
+os.platform(): Returns the operating system platform (e.g., ‘linux’, ‘darwin’).
+os.release(): Returns the operating system release.
+os.totalmem(): Returns the total amount of system memory in bytes.
+os.uptime(): Returns the system uptime in seconds.
+
+Features
+System Information: Provides insights into the system’s hardware and software environment.
+Resource Monitoring: Helps in monitoring memory usage and system performance.
+Platform Detection: Identifies the platform and version of the operating system.
+
+Example: App.js
+
+Benefits
+Enhanced Functionality: Facilitates writing system-specific code.
+Performance: Allows monitoring and optimizing system resource usage.
+Cross-Platform Support: Ensures compatibility across different operating systems.
+Summary
+The os module in Node.js is a powerful tool for accessing and managing system information. It enables developers to create applications that are aware of the operating system’s characteristics, improving functionality and performance.

@@ -1,0 +1,24 @@
+What is the default module system used in Node.js?
+Which function is used to import modules in CommonJS?
+Which object is used to export functionality in CommonJS?
+What are the two ways you can enable ES6 Modules in Node.js?
+
+What syntax is used to import modules in ES6 Modules?
+
+How do you export multiple functions in an ES6 Module?
+
+Explain the difference between export default and named export in ES6 Modules.
+
+Why is it important for Node.js to support both CommonJS and ES6 modules?
+
+Create two files:
+
+calculator.js exporting multiply and divide functions using module.exports
+
+app.js that uses require to import them and logs the result of multiply(10, 5) and divide(10, 2)
+
+Create two files:
+
+stringUtils.mjs exporting toUpperCase and toLowerCase using named exports.
+
+stringApp.mjs importing them and logging the results of toUpperCase("hello") and toLowerCase("WORLD")

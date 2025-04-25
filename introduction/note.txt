@@ -1,0 +1,191 @@
+What is Node.js?
+
+Node.js is a powerful JavaScript runtime environment, built on Google Chrome's V8 JavaScript Engine. Node.js is open-source and cross platform.
+
+Why Learn Node.js?
+
+Node.js is used for server-side programming with JavaScript. Hence, you can use a single programming language (JavaScript) for both front-end and back-end development.
+
+Node.js implements asynchronous execution of tasks in a single thread with async and await technique. This makes Node.js application significantly faster than multi-threaded applications.
+
+A common task for a web server can be to open a file on the server and return the content to the client.
+
+Here is how PHP or ASP handles a file request:
+
+Sends the task to the computer's file system.
+Waits while the file system opens and reads the file.
+Returns the content to the client.
+Ready to handle the next request.
+
+Here is how Node.js handles a file request:
+
+Sends the task to the computer's file system.
+Ready to handle the next request.
+When the file system has opened and read the file, the server returns the content to the client.
+Node.js eliminates the waiting, and simply continues with the next request.
+
+Node.js is being used to build command line applications, web applications, real-time chat applications, REST APIs etc.
+
+
+Local Environment Setup
+
+Download Node.js
+The official Node.js website has installation instructions for Node.js: https://nodejs.org
+Start the installation b double-clicking the downloaded file.
+
+The installation takes you through a few steps of the installation wizard. It also adds the installation directory of Node.js executable to the system path.
+
+To verify if Node.js has been successfully installed, open the command prompt and type node -v. If Node.js is installed successfully then it will display the version of the Node.js installed on your machine.
+
+Creating Node.js Application
+To create a "Hello, World!" web application using Node.js, you need the following three important components −
+
+Import required modules − We use the require directive to load Node.js modules.
+
+Create server − A server which will listen to client's requests similar to Apache HTTP Server.
+
+Read request and return response − The server created in an earlier step will read the HTTP request made by the client which can be a browser or a console and return the response.
+
+var http = require('http');
+
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.end('Hello World!');
+}).listen(8080,() => console.log('the server is running on 8080'));
+
+The code tells the computer to write "Hello World!" if anyone (e.g. a web browser) tries to access your computer on port 8080.
+
+Node.js files must be initiated in the "Command Line Interface" program of your computer.
+
+The file you have just created must be initiated by Node.js before any action can take place.
+
+open your terminal and write node fileName.js 
+
+Now, your computer works as a server!
+
+If anyone tries to access your computer on port 8080, they will get a "Hello World!" message in return!
+
+Start your internet browser, and type in the address: http://localhost:8080
+
+
+Node.js - REPL Terminal
+
+What is REPL
+It is an interactive programming environment that allows users to run the JavaScript code directly in the terminal, It stands for:
+
+Read − It reads the user input and analyses it into the JavaScript expressions.
+Eval − It evaluates the analyzed JavaScript expressions.
+Print − It prints the evaluation result.
+Loop − Loops back to read the next input.
+
+The REPL environment is automatically available, when we install the Node.js making it convenient for quick testing and debugging.
+Starting the REPL
+The REPL can be accessed directly from the command line. This makes it easy to write and test the JavaScript code without creating the separate script files. For launching the REPL terminal, open the command prompt or terminal and type:
+
+node
+
+Using REPL
+The REPL terminal provides a environment, where users can execute the JavaScript expressions, perform calculations, declare variables and define the functions interactively
+
+2.2 Modular structure: avoiding problems of global namespace collision
+* Modular structure: Modular structure is a general design principle, not special to Node or programing languages.
+* Modular design: It is a design theory and practice that subdivides a system into smaller
+parts called modules, which can be independently created, modified, replaced or exchanged
+between different systems
+
+Why modular structure is needed in Node.js? To solve the problem of global namespace collisions
+Problem of global name-space collisions
+• Namespace: Namespace is basically the place/space where name of a
+variable or function is accessible.
+• Name collision: Name collisions is the accidental overriding of the value
+of a variable/function because accidentally used the same
+variable/function name in different places
+
+
+Name collision in JavaScript: In JavaScript, using same variable name or
+function name in a space will override the first/earlier function/variable and return
+the value of the latest if we use the same variable/function name in our JavaScript
+file.
+
+Evolution of modular development to solve global name-space collisions:
+Modules are the fundamental building blocks of the code structure. The module
+system allows you to organize your code, hide information and only expose the
+public aspect of a module by exporting 
+
+Node module: It is a single or multiple JavaScript files with specific functionality
+organized in a way that can be reused throughout the Node.js application
+
+
+When writing Node.js applications, we often need to split our code into multiple files or modules and reuse functions, variables, or objects from one file in another.
+Node.js supports two main module systems for doing this:
+
+ 1. CommonJS (CJS)
+CommonJS is the default and original module system used in Node.js.
+It has been part of Node.js since the beginning and is widely supported in many existing Node.js projects.
+
+Node modules use wrapper function to avoid name collision:
+Variables/functions in any Node module will remain private because each module
+is wrapped in a function  by Node.js before executing the code.
+syntax of this function wrapper function:
+(function(exports, require, module, __filename, __dirname) {
+ // entire module code here
+});
+
+The entire code written inside a Node module is private to the module,
+unless explicitly stated (exported) otherwise. Even if you define a global
+variable in a module using var, let or const keywords, the variables are
+scoped locally to the module rather than being scoped globally.
+
+
+The five Node module parameters (exports, require, module, __filename,
+__dirname) : These parameters are available inside each module in Node and are
+also local to the module as they are wrapped by a function. The parameters provide
+valuable information related to a module
+ __filename: console.log(__filename) returns the name of your module
+
+ The “module” object in Node: It refers to the object that represents your
+current module/JavaScript file. To check that, you can console
+module and see your module printed in an object form. `
+
+
+“exports” parameter in Node/CommonJS: It is key value of the
+“module” object. If you console module.exports, you will see an empty
+object printed. The “module.exports” makes our module available for
+other modules to import it by allowing these two things:
+
+The “require() function” to load a Node module: The require() function
+is a built-in function in Node built to include modules that exist in different
+files. We need the require function to load a module. The way require()
+function works is that it first reads the module/JS file, executes the file,
+and then proceeds to return the exports object. This function takes one
+argument, the path of the module you want to load. Note: the relative path
+principle applies here. Example: var something = require("./some.js"). 
+
+✅ How It Works:
+Uses require() to import modules.
+
+Uses module.exports to export functionality.
+
+✅ Example: common.js, common1.js comApp.js
+
+
+2. ES6 Modules (ECMAScript Modules or ESM)
+ES6 Modules (introduced in ECMAScript 2015) are a modern standard for writing modular JavaScript — the same system used in browsers.
+Node.js later added support for ES6 modules to align with modern JavaScript.
+
+✅ How It Works:
+Uses import to import modules.
+
+Uses export to export functionality.
+
+✅ Example: es61.mjs, es62.mjs and es6App.mjs
+
+Note! You must either:
+
+Add "type": "module" in your package.json
+OR
+
+Use the .mjs file extension.
+
+
+

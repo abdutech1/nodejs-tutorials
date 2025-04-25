@@ -1,0 +1,17 @@
+1, Create a Simple Console Application
+
+Create a Node.js file named hello.js.
+Inside the file, write a program that prints Hello World to the console.
+Run the file in your terminal using node hello.js
+2, Create a Basic HTTP Server
+Create a Node.js file named server.js.
+Import the built-in http module using require.
+Create a server using http.createServer().
+Inside the server function:
+Set the HTTP status code to 200.
+Set the content type to text/html.
+Send back the response Hello World! using res.end().
+Make the server listen on port 8080.
+Log the message "the server is running on 8080" in the console when the server starts.
+
+Test your server by visiting http://localhost:8080 in your browser

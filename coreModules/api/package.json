@@ -1,0 +1,15 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "REST APIs on vanila Nodejs",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "keywords": [
+    "API",
+    "REST"
+  ],
+  "author": "",
+  "license": "ISC"
+}
